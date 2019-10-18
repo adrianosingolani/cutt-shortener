@@ -1,0 +1,5 @@
+{
+    "mongoUri": "mongodb://shortener:short123@localhost:27017/shortener",
+    "baseUrl": "http://localhost:3001",
+    "jwtSecret": "s1h2o3r4t5e6n7e8r9"
+}

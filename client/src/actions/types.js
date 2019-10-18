@@ -1,0 +1,28 @@
+// links
+export const GET_URLS_SUCCESS = 'GET_URLS_SUCCESS';
+export const GET_URLS_FAIL = 'GET_URLS_FAIL';
+export const GET_DETAILS_SUCCESS = 'GET_DETAILS_SUCCESS';
+export const GET_DETAILS_FAIL = 'GET_DETAILS_FAIL';
+export const REDIRECT_SUCCESS = 'REDIRECT_SUCCESS';
+export const REDIRECT_FAIL = 'REDIRECT_FAIL';
+export const ADD_URL_SUCCESS = 'ADD_URL_SUCCESS';
+export const ADD_URL_FAIL = 'ADD_URL_FAIL';
+export const UPDATE_URL_SUCCESS = 'UPDATE_URL_SUCCESS';
+export const UPDATE_URL_FAIL = 'UPDATE_URL_FAIL';
+export const DELETE_URL_SUCCESS = 'DELETE_URL_SUCCESS';
+export const DELETE_URL_FAIL = 'DELETE_URL_FAIL';
+export const GET_CODE_SUCCESS = 'GET_CODE_SUCCESS';
+export const GET_CODE_FAIL = 'GET_CODE_FAIL';
+
+// auth
+export const USER_LOADED = 'USER_LOADED';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+
+// messages
+export const GET_MESSAGE = 'GET_MESSAGE';
+export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
