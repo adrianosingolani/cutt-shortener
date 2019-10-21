@@ -10,7 +10,8 @@ import {
     Form,
     Grid,
     Header,
-    Container
+    Container,
+    Divider
 } from 'semantic-ui-react';
 
 import { default as SiteHeader } from './Header';
@@ -51,9 +52,13 @@ class Login extends Component {
         return (
             <React.Fragment>
                 <SiteHeader />
+
                 <Container>
                     <Header size="huge" textAlign="center">Log in to start creating short links</Header>
                 </Container>
+
+                <Divider hidden />
+
                 <Container>
                     <Grid centered>
                         <Grid.Column style={{ width: "90%", maxWidth: '380px' }}>
@@ -98,4 +103,4 @@ const mapStateToProps = (state) => ({
     message: state.message
 })
 
-export default connect(mapStateToProps, { logIn })(Login);
+export default connect(mapStateToProps, {logIn})(Login);

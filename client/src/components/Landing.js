@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { PropTypes } from 'prop-types';
-
-import { GET_CODE_SUCCESS, GET_CODE_FAIL, ADD_URL_SUCCESS } from '../actions/types';
-import { addUrl, getCode } from '../actions/urlActions';
 
 import {
     Container,
@@ -11,73 +6,24 @@ import {
     Icon,
     Segment,
     Divider,
-    Form,
-    Button,
-    Label,
-    Input,
-    TextArea,
     Grid,
-    Image
+    Message
 } from 'semantic-ui-react';
 
 import { default as SiteHeader } from './Header';
+import LandingAddUrl from './LandingAddUrl';
+import LandingUrlsList from './LandingUrlsList';
 
 class Landing extends Component {
-    state = {
-        urlCode: '',
-        longUrl: ''
-    }
-
-    componentDidMount() {
-        this.props.getCode();
-    }
-
-    componentDidUpdate(prevProps) {
-        const { urls, message } = this.props;
-
-        if (message !== prevProps.message) {
-            switch (message.id) {
-                case GET_CODE_SUCCESS:
-                    this.setState({ urlCode: urls.newCode });
-                    break;
-                case GET_CODE_FAIL:
-                    this.props.getCode();
-                    break;
-                case ADD_URL_SUCCESS:
-                    this.setState({ urlCode: '', longUrl: '' });
-                    this.props.getCode();
-                    break;
-                default:
-                // do nothing
-            }
-        }
-    }
-
-    onChangeInput = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
-    }
-
-    onSubmit = (e) => {
-        e.preventDefault();
-
-        const { urlCode, longUrl } = this.state;
-
-        const newUrl = {
-            urlCode, longUrl
-        }
-
-        this.props.addUrl(newUrl);
-    }
-
     render() {
         return (
             <React.Fragment>
                 <SiteHeader />
                 <Container textAlign='center'>
                     <Header as='h1'>
-                        Free customizable URL Shortener with click statistics
+                        Free customizable URL shortener with click statistics
                         <Header.Subheader style={{ marginTop: '1rem' }}>
-                            Sign up to create custom short links, edit, delete and measure clicks. It's FREE!
+                            Sign up for FREE to transform boring and long links into simplified and outstanding ones.
                         </Header.Subheader>
                     </Header>
                 </Container>
@@ -86,24 +32,16 @@ class Landing extends Component {
 
                 <Segment color='blue' inverted basic padded='very'>
                     <Container>
-                        <Form style={{ maxWidth: '780px', margin: 'auto' }}>
-                            <Form.Field
-                                name='longUrl'
-                                onChange={this.onChangeInput}
-                                value={this.state.longUrl}
+                        <LandingAddUrl />
 
-                            >
-                                <Label color='orange' pointing='below'>Paste a long URL</Label>
-                                <TextArea rows='3' style={{ fontSize: '1.03em', resize: 'none' }} />
-                            </Form.Field>
-                            <Form.Button
-                                type='submit'
-                                color='orange'
-                                content='Shorten'
-                                size='large'
-                                fluid
-                            />
-                        </Form>
+                        <Divider section />
+                        <div style={{ maxWidth: '780px', margin: '1rem auto' }}>
+                            <Message floating color='orange' size='huge' style={{ textAlign: 'center' }}>
+                                Log in to customize, edit, delete and track clicks
+                            </Message>
+
+                            <LandingUrlsList />
+                        </div>
                     </Container>
                 </Segment>
 
@@ -116,7 +54,7 @@ class Landing extends Component {
                                 <Icon name='chain' style={{ marginBottom: '1rem' }} />
                                 Shorten
                                 <Header.Subheader style={{ textAlign: 'justify', marginTop: '1rem' }}>
-                                    Manage your account settings and set e-mail preferences.
+                                    Simplify long URLs into customized links that are easier to recognize
                                 </Header.Subheader>
                             </Header>
                         </Grid.Column>
@@ -125,7 +63,7 @@ class Landing extends Component {
                                 <Icon name='edit' style={{ marginBottom: '1rem' }} />
                                 Manage
                                 <Header.Subheader style={{ textAlign: 'justify', marginTop: '1rem' }}>
-                                    Manage your account settings and set e-mail preferences.
+                                    If you change your mind, you can edit or delete your links for free
                                 </Header.Subheader>
                             </Header>
                         </Grid.Column>
@@ -134,7 +72,7 @@ class Landing extends Component {
                                 <Icon name='share alternate' style={{ marginBottom: '1rem' }} />
                                 Share
                                 <Header.Subheader style={{ textAlign: 'justify', marginTop: '1rem' }}>
-                                    Manage your account settings and set e-mail preferences.
+                                    Share unique and recognizable links with the world and get more clicks
                                 </Header.Subheader>
                             </Header>
                         </Grid.Column>
@@ -143,7 +81,7 @@ class Landing extends Component {
                                 <Icon name='chart line' style={{ marginBottom: '1rem' }} />
                                 Track
                                 <Header.Subheader style={{ textAlign: 'justify', marginTop: '1rem' }}>
-                                    Manage your account settings and set e-mail preferences.
+                                    Track each shortened link and see how many times they were clicked
                                 </Header.Subheader>
                             </Header>
                         </Grid.Column>
@@ -157,18 +95,4 @@ class Landing extends Component {
     }
 }
 
-Landing.propTypes = {
-    getCode: PropTypes.func.isRequired,
-    addUrl: PropTypes.func.isRequired,
-    urls: PropTypes.object.isRequired,
-    message: PropTypes.object.isRequired,
-    app: PropTypes.object.isRequired
-}
-
-const mapStateToProps = (state) => ({
-    urls: state.urls,
-    message: state.message,
-    app: state.app
-})
-
-export default connect(mapStateToProps, { getCode, addUrl })(Landing);
+export default Landing;

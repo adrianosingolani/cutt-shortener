@@ -7,7 +7,8 @@ import {
     Form,
     Grid,
     Header,
-    Container
+    Container,
+    Divider
 } from 'semantic-ui-react';
 
 import { default as SiteHeader } from './Header';
@@ -49,9 +50,13 @@ class SignUp extends Component {
         return (
             <React.Fragment>
                 <SiteHeader />
+
                 <Container>
                     <Header size="huge" textAlign="center">Sign up to start creating short links</Header>
                 </Container>
+
+                <Divider hidden />
+
                 <Container>
                     <Grid centered>
                         <Grid.Column style={{ width: "90%", maxWidth: '380px' }}>
@@ -102,7 +107,4 @@ const mapStateToProps = (state) => ({
 })
 
 export default
-    connect(
-        mapStateToProps,
-        { signUp }
-    )(SignUp);
+    connect(mapStateToProps, {signUp})(SignUp);

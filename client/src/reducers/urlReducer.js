@@ -1,7 +1,6 @@
 import {
     GET_CODE_SUCCESS,
     GET_CODE_FAIL,
-    GET_DETAILS_SUCCESS,
     REDIRECT_SUCCESS,
     ADD_URL_SUCCESS,
     UPDATE_URL_SUCCESS,
@@ -17,8 +16,7 @@ const initialState = {
             urlCode: null,
             longUrl: null,
             date: null,
-            clicks: [{ date: null }],
-            accordionActive: false
+            clicks: [{ date: null }]
         }
     ],
     redirectUrl: null
@@ -44,12 +42,7 @@ export default function (state = initialState, action) {
             }
         case UPDATE_URL_SUCCESS:
             const updatedUrls = state.urls.map(url => {
-                // return url._id === action.payload._id ? action.payload : url;
-
-                if (url._id === action.payload._id) {
-                    url = action.payload;
-                    url.accordionActive = true;
-                }
+                if (url._id === action.payload._id) url = action.payload;
 
                 return url;
             })
@@ -76,11 +69,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 redirectUrl: action.payload
-            }
-        case GET_DETAILS_SUCCESS:
-            return {
-                ...state,
-                urlDetails: action.payload
             }
         default:
             return state

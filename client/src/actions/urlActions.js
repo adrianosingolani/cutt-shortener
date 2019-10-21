@@ -3,8 +3,6 @@ import axios from 'axios';
 import {
     GET_CODE_SUCCESS,
     GET_CODE_FAIL,
-    GET_DETAILS_SUCCESS,
-    GET_DETAILS_FAIL,
     REDIRECT_SUCCESS,
     REDIRECT_FAIL,
     ADD_URL_SUCCESS,
@@ -85,25 +83,6 @@ export const deleteUrl = (urlId) => (dispatch, getState) => {
                     error.response.status, 
                     DELETE_URL_FAIL
                 )
-            );
-        });
-}
-
-export const getStats = (urlCode) => (dispatch, getState) => {    
-    axios.get('/api/url/stats/'+urlCode, tokenConfig(getState))
-        .then(res => {
-            dispatch({
-                type: GET_DETAILS_SUCCESS,
-                payload: res.data
-            })
-
-            dispatch(
-                returnMessage('URL stats loaded', res.status, GET_DETAILS_SUCCESS)
-            );
-        })
-        .catch(error => {
-            dispatch(
-                returnMessage(error.response.data.msg, error.response.status, GET_DETAILS_FAIL)
             );
         });
 }

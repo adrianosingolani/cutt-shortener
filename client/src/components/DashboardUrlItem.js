@@ -10,12 +10,11 @@ import {
     Header,
     Icon,
     Button,
-    Accordion,
     Form,
     Confirm
 } from 'semantic-ui-react';
 
-class UrlItem extends Component {
+class DashboardUrlItem extends Component {
     state = {
         editing: false,
         urlId: this.props.data._id,
@@ -23,7 +22,6 @@ class UrlItem extends Component {
         longUrl: this.props.data.longUrl,
         initialUrlCode: null,
         initialLongUrl: null,
-        accordionActive: this.props.data.accordionActive,
         editConfirmOpen: false,
         deleteConfirmOpen: false
     }
@@ -59,7 +57,7 @@ class UrlItem extends Component {
 
     copyLink = () => {
         const el = document.createElement('textarea');
-        el.value = this.props.app.domain + this.state.urlCode;
+        el.value = this.props.app.baseUrl + this.state.urlCode;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
@@ -83,9 +81,9 @@ class UrlItem extends Component {
     confirmSaveEdit = (e) => {
         e.preventDefault();
         console.log('confirmSaveEdit');
-        
 
-        this.setState({editConfirmOpen: true});
+
+        this.setState({ editConfirmOpen: true });
     }
 
     saveEdit = () => {
@@ -130,7 +128,7 @@ class UrlItem extends Component {
 
     render() {
         const { date, clicks } = this.props.data;
-        const { editing, urlId, urlCode, longUrl, accordionActive, editConfirmOpen, deleteConfirmOpen } = this.state;
+        const { editing, urlCode, longUrl, editConfirmOpen, deleteConfirmOpen } = this.state;
 
         return (
             <React.Fragment>
@@ -176,33 +174,23 @@ class UrlItem extends Component {
                             </Header.Content>
                         </Header>
                         {!editing ? (
-                            <Accordion>
-                                <Accordion.Title
-                                    active={accordionActive}
-                                    index={urlId}
-                                    onClick={() => this.setState({ accordionActive: !accordionActive })}
-                                >
-                                    <Icon name='dropdown' />
-                                    more...
-                            </Accordion.Title>
-                                <Accordion.Content active={accordionActive}>
-                                    <Button
-                                        color='yellow' size='mini' compact icon='copy outline' content='Copy short link'
-                                        onClick={this.copyLink}
-                                    />
-                                    <Button
-                                        color='green' size='mini' compact icon='chart bar outline' content='Statistics'
-                                    />
-                                    <Button
-                                        color='blue' size='mini' compact icon='edit outline' content='Edit'
-                                        onClick={this.enableEdit}
-                                    />
-                                    <Button
-                                        color='red' size='mini' compact icon='trash alternate outline' content='Delete'
-                                        onClick={() => this.setState({deleteConfirmOpen: true})}
-                                    />
-                                </Accordion.Content>
-                            </Accordion>
+                            <React.Fragment>
+                                <Button
+                                    color='orange' size='mini' compact basic icon='copy outline' content='Copy short link'
+                                    onClick={this.copyLink}
+                                />
+                                <Button
+                                    color='green' size='mini' compact basic icon='chart bar outline' content='Statistics'
+                                />
+                                <Button
+                                    color='blue' size='mini' compact basic icon='edit outline' content='Edit'
+                                    onClick={this.enableEdit}
+                                />
+                                <Button
+                                    color='red' size='mini' compact basic icon='trash alternate outline' content='Delete'
+                                    onClick={() => this.setState({ deleteConfirmOpen: true })}
+                                />
+                            </React.Fragment>
                         ) : null}
                     </Table.Cell>
                     <Table.Cell textAlign='center' collapsing>{clicks.length}</Table.Cell>
@@ -219,7 +207,7 @@ class UrlItem extends Component {
                     open={deleteConfirmOpen}
                     header='Delete link'
                     content={'If you delete it, the links with this code won\'t be available anymore. Are you sure?'}
-                    onCancel={() => this.setState({deleteConfirmOpen: false})}
+                    onCancel={() => this.setState({ deleteConfirmOpen: false })}
                     onConfirm={this.deleteLink}
                 />
             </React.Fragment>
@@ -227,7 +215,7 @@ class UrlItem extends Component {
     }
 }
 
-UrlItem.propTypes = {
+DashboardUrlItem.propTypes = {
     updateUrl: PropTypes.func.isRequired,
     deleteUrl: PropTypes.func.isRequired,
     message: PropTypes.object.isRequired,
@@ -239,4 +227,4 @@ const mapStateToProps = (state) => ({
     app: state.app
 })
 
-export default connect(mapStateToProps, { updateUrl, deleteUrl })(UrlItem);
+export default connect(mapStateToProps, { updateUrl, deleteUrl })(DashboardUrlItem);

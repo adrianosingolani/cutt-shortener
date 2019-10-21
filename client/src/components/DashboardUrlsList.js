@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import { GET_URLS_SUCCESS, GET_URLS_FAIL } from '../actions/types';
 import { getUrls } from '../actions/urlActions';
 
-import UrlItem from './UrlItem';
+import DashboardUrlItem from './DashboardUrlItem';
 
 import {
     Container,
@@ -17,7 +17,7 @@ import {
 } from 'semantic-ui-react';
 
 
-class UrlsList extends Component {
+class DashboardUrlsList extends Component {
     state = {
         column: 'date',
         data: this.props.urls.urls,
@@ -30,8 +30,7 @@ class UrlsList extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { message } = this.props;
-        const { urls } = this.props;
+        const { message, urls } = this.props;
 
         if (message !== prevProps.message && (message.id === GET_URLS_SUCCESS || message.id === GET_URLS_FAIL)) {
             //remove loading animation
@@ -76,7 +75,6 @@ class UrlsList extends Component {
                     <Table
                         sortable
                         celled
-                        size='small'
                         unstackable
                         style={{
                             margin: '0',
@@ -104,8 +102,8 @@ class UrlsList extends Component {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                            {_.map(data, ({ _id, date, urlCode, longUrl, clicks, accordionActive }) => (
-                                <UrlItem key={urlCode} data={{ _id, date, urlCode, longUrl, clicks, accordionActive }} />
+                            {_.map(data, ({ _id, date, urlCode, longUrl, clicks }) => (
+                                <DashboardUrlItem key={urlCode} data={{ _id, date, urlCode, longUrl, clicks }} />
                             ))}
                         </Table.Body>
                     </Table>
@@ -115,7 +113,7 @@ class UrlsList extends Component {
     }
 }
 
-UrlsList.propTypes = {
+DashboardUrlsList.propTypes = {
     getUrls: PropTypes.func.isRequired,
     urls: PropTypes.object.isRequired
 }
@@ -125,4 +123,4 @@ const mapStateToProps = (state) => ({
     message: state.message
 })
 
-export default connect(mapStateToProps, { getUrls })(UrlsList);
+export default connect(mapStateToProps, { getUrls })(DashboardUrlsList);

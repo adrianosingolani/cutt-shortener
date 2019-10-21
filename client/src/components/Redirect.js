@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
@@ -40,21 +39,8 @@ export class Redirect extends Component {
     }
 
     render() {
-        const { redirectUrl } = this.state;
-        
         return (            
             <React.Fragment>
-                {/* {redirectUrl ? redirectUrl.longUrl : null} */}
-                {/* {redirectUrl ? (
-                    <Route 
-                        path={`/${redirectUrl.urlCode}`}
-                        component={() => {
-                            console.log("teste");
-                            window.location.href=redirectUrl.longUrl;
-                            return null;
-                        }} 
-                    />
-                ) : null} */}
             </React.Fragment>
         )
     }
@@ -62,6 +48,7 @@ export class Redirect extends Component {
 
 Redirect.propTypes = {
     redirectUrl: PropTypes.object,
+    message: PropTypes.object,
     addClickAndRedirect: PropTypes.func.isRequired
 }
 

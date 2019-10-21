@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { GET_DETAILS_SUCCESS, GET_DETAILS_FAIL } from '../actions/types';
-import { getDetails } from '../actions/urlActions';
-
 import {
     Table,
     Header,
@@ -13,21 +10,10 @@ import {
     Accordion
 } from 'semantic-ui-react';
 
-class UrlItem extends Component {
+class Stats extends Component {
     state = {
         loading: true,
         activeIndex: null
-    }
-
-    componentDidUpdate(prevProps) {
-        const { message } = this.props;
-        const { urlDetails } = this.props;
-
-        if (message !== prevProps.message && (message.id === GET_DETAILS_SUCCESS || message.id === GET_DETAILS_FAIL)) {
-            //remove loading animation
-            this.setState({ loading: false, urlDetails });
-            console.log(urlDetails);
-        }
     }
 
     handleClick = (e, titleProps) => {
@@ -90,14 +76,11 @@ class UrlItem extends Component {
     }
 }
 
-UrlItem.propTypes = {
-    getDetails: PropTypes.func.isRequired,
-    urlDetails: PropTypes.object
+Stats.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    urlDetails: state.urls.urlDetails,
     message: state.message
 })
 
-export default connect(mapStateToProps, { getDetails })(UrlItem);
+export default connect(mapStateToProps, { })(Stats);

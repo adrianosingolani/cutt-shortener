@@ -12,10 +12,10 @@ import {
     Label
 } from 'semantic-ui-react';
 
-class AddUrl extends Component {
+class DashboardAddUrl extends Component {
     state = {
         urlCode: '',
-        longUrl: 'http://google.com'
+        longUrl: ''
     }
 
     componentDidMount() {
@@ -82,10 +82,10 @@ class AddUrl extends Component {
                                     value={this.state.urlCode}
                                     style={{ marginBottom: '1em' }}
                                 >
-                                    <Label basic>{this.props.app.domain}</Label>
+                                    <Label basic>{this.props.app.baseUrl}</Label>
                                     <input />
                                 </Form.Input>
-                                <Form.Button width={4} fluid type='submit' color='blue'>Shorten</Form.Button>
+                                <Form.Button width={4} fluid type='submit' color='orange'>Shorten</Form.Button>
                             </Form.Group>
                         </Form>
                     </Grid.Column>
@@ -95,7 +95,7 @@ class AddUrl extends Component {
     }
 }
 
-AddUrl.propTypes = {
+DashboardAddUrl.propTypes = {
     getCode: PropTypes.func.isRequired,
     addUrl: PropTypes.func.isRequired,
     urls: PropTypes.object.isRequired,
@@ -109,4 +109,4 @@ const mapStateToProps = (state) => ({
     app: state.app
 })
 
-export default connect(mapStateToProps, { getCode, addUrl })(AddUrl);
+export default connect(mapStateToProps, { getCode, addUrl })(DashboardAddUrl);

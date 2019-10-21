@@ -1,8 +1,6 @@
 // links
 export const GET_URLS_SUCCESS = 'GET_URLS_SUCCESS';
 export const GET_URLS_FAIL = 'GET_URLS_FAIL';
-export const GET_DETAILS_SUCCESS = 'GET_DETAILS_SUCCESS';
-export const GET_DETAILS_FAIL = 'GET_DETAILS_FAIL';
 export const REDIRECT_SUCCESS = 'REDIRECT_SUCCESS';
 export const REDIRECT_FAIL = 'REDIRECT_FAIL';
 export const ADD_URL_SUCCESS = 'ADD_URL_SUCCESS';
@@ -13,6 +11,7 @@ export const DELETE_URL_SUCCESS = 'DELETE_URL_SUCCESS';
 export const DELETE_URL_FAIL = 'DELETE_URL_FAIL';
 export const GET_CODE_SUCCESS = 'GET_CODE_SUCCESS';
 export const GET_CODE_FAIL = 'GET_CODE_FAIL';
+export const SET_STORED_URLS = 'SET_STORED_URLS';
 
 // auth
 export const USER_LOADED = 'USER_LOADED';

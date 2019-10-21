@@ -22,33 +22,31 @@ class Navbar extends Component {
         )
 
         return (
-            <Menu borderless style={{borderRadius: '0'}} size='massive'>
+            <Menu borderless style={{ borderRadius: '0' }} size='large'>
                 <Container>
-                    <Menu.Item color='orange' header as={Link} to='/'>
-                        {/* <Header as='h1' color='orange'> */}
-                            {/* <Link to='/' color='orange'> */}
-                                <Icon name='cut' style={{ margin: '0'}} />
-                                {this.props.app.name}
-                            {/* </Link> */}
-                        {/* </Header> */}
+                    <Menu.Item color='orange' header>
+                        <Header as={Link} to='/' color='black' size='huge'>
+                            <Icon name='cut' color='orange' style={{fontSize: '0.9em', paddingTop: '0.05em'}} />
+                            <Header.Content style={{paddingLeft: '0'}}>{this.props.app.name}</Header.Content>
+                        </Header>
                     </Menu.Item>
                     <Menu.Menu position='right'>
                         {isAuthenticated ? (
                             <Fragment>
-                                    <Dropdown item simple icon={null} trigger={userMenu}>
-                                        <Dropdown.Menu>
-                                            <Dropdown.Item as={Link} to='dashboard'>Dashboard</Dropdown.Item>
-                                            <Dropdown.Item as={Link} to='password'>Change password</Dropdown.Item>
-                                            <Dropdown.Item as={Link} to='logout'>Log out</Dropdown.Item>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
+                                <Dropdown item simple icon={null} trigger={userMenu}>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item as={Link} to='dashboard'>Dashboard</Dropdown.Item>
+                                        <Dropdown.Item as={Link} to='password'>Change password</Dropdown.Item>
+                                        <Dropdown.Item as={Link} to='logout'>Log out</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
                             </Fragment>
                         ) : (
-                            <Fragment>
-                                <Menu.Item as={Link} to='login'>Log in</Menu.Item>
-                                <Menu.Item as={Link} to='signup'>Sign up</Menu.Item>
-                            </Fragment>
-                        )}
+                                <Fragment>
+                                    <Menu.Item as={Link} to='login'>Log in</Menu.Item>
+                                    <Menu.Item as={Link} to='signup'>Sign up</Menu.Item>
+                                </Fragment>
+                            )}
                     </Menu.Menu>
                 </Container>
             </Menu>

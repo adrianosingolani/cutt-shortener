@@ -12,6 +12,8 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Redirect from './components/Redirect';
+import Stats from './components/Stats';
+
 
 class App extends Component {
   componentDidMount() {
@@ -29,6 +31,7 @@ class App extends Component {
             <Route exact path='/login' component={Login} />
             <ProtectedRoute exact path='/logout' component={Logout} />
             <Route exact path='/:urlCode' component={Redirect} />
+            <Route exact path='/stats/:urlCode' component={Stats} />
           </Switch>
         </Router>
       </Provider>
