@@ -25,3 +25,7 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 // messages
 export const GET_MESSAGE = 'GET_MESSAGE';
 export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
+
+// stats
+export const GET_STATS_SUCCESS = 'GET_STATS_SUCCESS';
+export const GET_STATS_FAIL = 'GET_STATS_FAIL';

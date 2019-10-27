@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { LOGIN_SUCCESS } from '../actions/types';
-
 import {
     Button,
     Form,
@@ -16,6 +14,7 @@ import {
 
 import { default as SiteHeader } from './Header';
 
+import { LOGIN_SUCCESS } from '../actions/types';
 import { logIn } from '../actions/authActions';
 
 class Login extends Component {

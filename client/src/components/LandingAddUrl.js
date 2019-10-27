@@ -16,7 +16,7 @@ import {
 class LandingAddUrl extends Component {
     state = {
         urlCode: '',
-        longUrl: 'http://google.com'
+        longUrl: ''
     }
 
     componentDidMount() {

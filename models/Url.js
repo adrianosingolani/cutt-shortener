@@ -17,16 +17,7 @@ const urlSchema = new mongoose.Schema({
     date: { 
         type: Date, 
         default: Date.now 
-    },
-    clicks: [
-        {
-            date: { 
-                type: Date, 
-                default: Date.now,
-                required: true
-            }
-        }
-    ]
+    }
 });
 
 module.exports = Url = mongoose.model('url', urlSchema);

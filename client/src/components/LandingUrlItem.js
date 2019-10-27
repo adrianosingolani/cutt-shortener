@@ -28,21 +28,24 @@ class LandingUrlItem extends Component {
                 <Header as='h5'>
                     <Icon name='linkify' style={{ paddingTop: '0.35em', verticalAlign: 'top' }} />
                     <Header.Content style={{ width: '100%' }}>
-                        <Button
-                            color='orange'
-                            size='tiny'
-                            basic
-                            icon='copy outline'
-                            content='Copy short link'
-                            onClick={() => this.copyLink(urlCode)}
-                            floated='right'
-                        />
                         <a href={baseUrl + urlCode} target='_blank' rel='noopener noreferrer'>{baseUrl + urlCode}</a>
-                        <Header.Subheader>
+
+
+                        <Header.Subheader style={{ maxHeight: '100px', overflow: 'auto' }}>
                             <span style={{ wordBreak: 'break-all' }}>{longUrl}</span>
                         </Header.Subheader>
                     </Header.Content>
                 </Header>
+                <Button
+                    color='orange'
+                    size='mini'
+                    compact 
+                    basic
+                    icon='copy outline'
+                    content='Copy short link' 
+                    onClick={() => this.copyLink(urlCode)} 
+                    style={{marginLeft: '2.2rem'}}
+                />
             </Segment>
         )
     }

@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
 import { UPDATE_URL_SUCCESS, UPDATE_URL_FAIL } from '../actions/types';
 import { updateUrl, deleteUrl } from '../actions/urlActions';
 
+import FadedText from './FadedText';
 import {
     Table,
     Header,
     Icon,
     Button,
     Form,
-    Confirm
+    Confirm,
+    Label
 } from 'semantic-ui-react';
 
 class DashboardUrlItem extends Component {
@@ -20,6 +23,7 @@ class DashboardUrlItem extends Component {
         urlId: this.props.data._id,
         urlCode: this.props.data.urlCode,
         longUrl: this.props.data.longUrl,
+        clicks: this.props.data.clicks,
         initialUrlCode: null,
         initialLongUrl: null,
         editConfirmOpen: false,
@@ -87,12 +91,12 @@ class DashboardUrlItem extends Component {
     }
 
     saveEdit = () => {
-        const { urlId, urlCode, longUrl, initialUrlCode, initialLongUrl } = this.state;
+        const { urlId, urlCode, longUrl, initialUrlCode, initialLongUrl, clicks } = this.state;
 
         // only request API to update url if it changed
         if ((urlCode !== initialUrlCode) || (longUrl !== initialLongUrl)) {
             const updatedUrl = {
-                urlId, urlCode, longUrl
+                urlId, urlCode, longUrl, clicks
             }
 
             this.props.updateUrl(updatedUrl);
@@ -141,12 +145,16 @@ class DashboardUrlItem extends Component {
                                     (
                                         <Form size='mini' onSubmit={this.confirmSaveEdit}>
                                             <Form.Input
+                                                labelPosition='left'
                                                 type='text'
                                                 name='urlCode'
                                                 width={16}
                                                 onChange={this.onChangeInput}
                                                 value={urlCode ? urlCode : ''}
-                                            />
+                                            >
+                                                <Label basic>{this.props.app.baseUrl}</Label>
+                                                <input />
+                                            </Form.Input>
                                             <Form.TextArea
                                                 name='longUrl'
                                                 width={16}
@@ -164,9 +172,9 @@ class DashboardUrlItem extends Component {
                                         </Form>
                                     ) : (
                                         <React.Fragment>
-                                            <span>{urlCode}</span>
+                                            <span onClick={this.copyLink}>{this.props.app.baseUrl + urlCode}</span>
                                             <Header.Subheader>
-                                                <span style={{ wordBreak: 'break-all' }}>{longUrl}</span>
+                                                <FadedText text={longUrl} />
                                             </Header.Subheader>
                                         </React.Fragment>
                                     )
@@ -176,25 +184,36 @@ class DashboardUrlItem extends Component {
                         {!editing ? (
                             <React.Fragment>
                                 <Button
-                                    color='orange' size='mini' compact basic icon='copy outline' content='Copy short link'
-                                    onClick={this.copyLink}
+                                    color='green'
+                                    size='mini'
+                                    compact
+                                    basic
+                                    icon='chart bar outline'
+                                    content='Stats'
                                 />
                                 <Button
-                                    color='green' size='mini' compact basic icon='chart bar outline' content='Statistics'
-                                />
-                                <Button
-                                    color='blue' size='mini' compact basic icon='edit outline' content='Edit'
+                                    color='blue'
+                                    size='mini'
+                                    compact
+                                    basic
+                                    icon='edit outline'
+                                    content='Edit'
                                     onClick={this.enableEdit}
                                 />
                                 <Button
-                                    color='red' size='mini' compact basic icon='trash alternate outline' content='Delete'
+                                    color='red'
+                                    size='mini'
+                                    compact
+                                    basic
+                                    icon='trash alternate outline'
+                                    content='Del'
                                     onClick={() => this.setState({ deleteConfirmOpen: true })}
                                 />
                             </React.Fragment>
                         ) : null}
                     </Table.Cell>
                     <Table.Cell textAlign='center' collapsing>{clicks.length}</Table.Cell>
-                    <Table.Cell textAlign='center' collapsing>{date}</Table.Cell>
+                    <Table.Cell textAlign='center' collapsing>{moment(date).format('ll')} <br /> {moment(date).format('LT')}</Table.Cell>
                 </Table.Row>
                 <Confirm
                     open={editConfirmOpen}
@@ -210,7 +229,7 @@ class DashboardUrlItem extends Component {
                     onCancel={() => this.setState({ deleteConfirmOpen: false })}
                     onConfirm={this.deleteLink}
                 />
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 }

@@ -9,11 +9,11 @@ import { getUrls } from '../actions/urlActions';
 import DashboardUrlItem from './DashboardUrlItem';
 
 import {
-    Container,
     Table,
     Segment,
     Dimmer,
-    Loader
+    Loader,
+    Header
 } from 'semantic-ui-react';
 
 
@@ -67,8 +67,9 @@ class DashboardUrlsList extends Component {
         const { column, data, direction, loading } = this.state;
 
         return (
-            <Container style={{ margin: '1rem 0', overflowX: 'auto' }}>
-                <Segment basic compact style={{ padding: '0', borderRadius: '5px', width: '100%' }}>
+            <Segment style={{ overflow: 'auto', paddingRight: '0' }}>
+                <Header style={{marginBottom: '2.65rem'}}>Your links</Header>
+                <Segment basic compact style={{ padding: '0 1rem 0 0', borderRadius: '5px', width: '100%' }}>
                     <Dimmer active={loading} inverted style={{ border: '1px solid rgba(34,36,38,.15' }}>
                         <Loader inverted>Loading URLs</Loader>
                     </Dimmer>
@@ -76,16 +77,14 @@ class DashboardUrlsList extends Component {
                         sortable
                         celled
                         unstackable
-                        style={{
-                            margin: '0',
-                            minWidth: '380px'
-                        }}
+                        style={{ margin: '0' }}
                     >
                         <Table.Header>
                             <Table.Row>
                                 <Table.HeaderCell
                                     sorted={column === 'urlCode' ? direction : null}
                                     onClick={this.handleSort('urlCode')}
+                                    textAlign='center'
                                 >Link</Table.HeaderCell>
                                 <Table.HeaderCell
                                     sorted={column === 'clicks' ? direction : null}
@@ -108,14 +107,15 @@ class DashboardUrlsList extends Component {
                         </Table.Body>
                     </Table>
                 </Segment>
-            </Container>
+            </Segment>
         )
     }
 }
 
 DashboardUrlsList.propTypes = {
     getUrls: PropTypes.func.isRequired,
-    urls: PropTypes.object.isRequired
+    urls: PropTypes.object.isRequired,
+    message: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

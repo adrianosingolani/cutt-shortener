@@ -16,7 +16,7 @@ const initialState = {
             urlCode: null,
             longUrl: null,
             date: null,
-            clicks: [{ date: null }]
+            clicks: 0
         }
     ],
     redirectUrl: null

@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const validUrl = require('valid-url');
 const config = require('config');
+const mongoose = require('mongoose');
 
 const auth = require('../middleware/auth');
 
 const Url = require('../models/Url');
 const User = require('../models/User');
+const Click = require('../models/Click');
 
 const reservedCodes = [
     'signup',
@@ -39,7 +41,11 @@ router.post('/', auth, (req, res) => {
 
             url.save()
                 .then(url => {
-                    res.json(url)
+                    const newUrl = {
+                        ...url._doc,
+                        clicks: []
+                    }                    
+                    res.json(newUrl)
                 })
                 .catch(error => {
                     if (error.name === 'MongoError' && error.code === 11000) {
@@ -107,7 +113,7 @@ router.post('/guest', (req, res) => {
 //update url
 router.patch('/', auth, (req, res) => {
     const userId = req.user.id;
-    const { urlId, urlCode, longUrl } = req.body.url;
+    const { urlId, urlCode, longUrl, clicks } = req.body.url;
 
     if (
         !validUrl.isUri(config.get('baseUrl') + '/' + urlCode) || 
@@ -120,7 +126,14 @@ router.patch('/', auth, (req, res) => {
         try {
             Url.findOneAndUpdate({ _id: urlId, userId }, { $set: { urlCode, longUrl } }, { new: true })
                 .then(url => {
-                    res.json(url);
+                    console.log(clicks);
+                    
+                    const updatedUrl = {
+                        ...url._doc,
+                        clicks
+                    }   
+
+                    res.json(updatedUrl);
                 })
                 .catch(error => {
                     if (error.name === 'MongoError' && error.code === 11000) {
@@ -153,7 +166,17 @@ router.delete('/:urlId', auth, (req, res) => {
 
 // get all user's urls
 router.get('/', auth, (req, res) => {
-    Url.find({ userId: req.user.id })
+    Url.aggregate([
+        { $match: { 
+            userId: mongoose.Types.ObjectId(req.user.id) 
+        } },
+        { $lookup: {
+            from: 'clicks',
+            localField: '_id',
+            foreignField: 'urlId',
+            as: 'clicks'
+        }}
+    ])
         .then(urls => {
             res.json(urls);
         })
@@ -161,25 +184,30 @@ router.get('/', auth, (req, res) => {
 
 // add click to specific url by urlCode and return new document
 router.post('/redirect/', (req, res) => {
-    const newClick = {
-        date: new Date()
-    }
-
-    Url.findOneAndUpdate({ urlCode: req.body.code }, { $push: { clicks: newClick } }, { new: true })
+    Url.findOne({ urlCode: req.body.code })
         .then(url => {
+
+            const click = new Click({
+                urlId: url._id,
+                userId: url.userId,
+                date: new Date()
+            })
+
+            click.save();
+
             res.json(url);
         });
 })
 
 // get a new URL code
 router.get('/code', (req, res) => {
-    var urlCode = '';
+    let urlCode = '';
 
     const codeLength = 4;
     const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_';
     const charactersLength = characters.length;
 
-    for (var i = 0; i < codeLength; i++) {
+    for (let i = 0; i < codeLength; i++) {
         urlCode += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 

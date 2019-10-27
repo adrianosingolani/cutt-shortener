@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 
-import { GET_CODE_SUCCESS, GET_CODE_FAIL, ADD_URL_SUCCESS } from '../actions/types';
+import {
+    GET_CODE_SUCCESS,
+    GET_CODE_FAIL,
+    ADD_URL_SUCCESS
+} from '../actions/types';
+
 import { addUrl, getCode } from '../actions/urlActions';
 
 import {
     Form,
     Grid,
-    Container,
-    Label
+    Label,
+    Header,
+    Segment
 } from 'semantic-ui-react';
 
 class DashboardAddUrl extends Component {
@@ -25,7 +31,7 @@ class DashboardAddUrl extends Component {
     componentDidUpdate(prevProps) {
         const { urls, message } = this.props;
 
-        if (message !== prevProps.message) {            
+        if (message !== prevProps.message) {
             switch (message.id) {
                 case GET_CODE_SUCCESS:
                     this.setState({ urlCode: urls.newCode });
@@ -38,7 +44,7 @@ class DashboardAddUrl extends Component {
                     this.props.getCode();
                     break;
                 default:
-                    // do nothing
+                // do nothing
             }
         }
     }
@@ -61,9 +67,10 @@ class DashboardAddUrl extends Component {
 
     render() {
         return (
-            <Container>
+            <Segment>
                 <Grid centered>
-                    <Grid.Column mobile={16} tablet={10} computer={8} largeScreen={6} widescreen={4}>
+                    <Grid.Column style={{ paddingBottom: '0' }}>
+                        <Header>New link</Header>
                         <Form size='small' onSubmit={this.onSubmit} >
                             <Form.TextArea
                                 label='Long URL'
@@ -72,9 +79,9 @@ class DashboardAddUrl extends Component {
                                 onChange={this.onChangeInput}
                                 value={this.state.longUrl}
                             />
-                            <Form.Group>
+                            <Form.Group style={{ marginBottom: '0' }}>
                                 <Form.Input
-                                    width={12}
+                                    width={8}
                                     labelPosition='left'
                                     type='text'
                                     name='urlCode'
@@ -85,12 +92,18 @@ class DashboardAddUrl extends Component {
                                     <Label basic>{this.props.app.baseUrl}</Label>
                                     <input />
                                 </Form.Input>
-                                <Form.Button width={4} fluid type='submit' color='orange'>Shorten</Form.Button>
+                                <Form.Button
+                                    width={8}
+                                    fluid
+                                    type='submit'
+                                    color='orange'
+                                    style={{ marginBottom: '1em' }}
+                                >Shorten</Form.Button>
                             </Form.Group>
                         </Form>
                     </Grid.Column>
                 </Grid>
-            </Container>
+            </Segment>
         )
     }
 }

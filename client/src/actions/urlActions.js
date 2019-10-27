@@ -20,7 +20,7 @@ import { tokenConfig } from './authActions';
 
 export const getUrls = () => (dispatch, getState) => {
     axios.get('/api/url', tokenConfig(getState))
-        .then(res => {
+        .then(res => {            
             dispatch({
                 type: GET_URLS_SUCCESS,
                 payload: res.data
